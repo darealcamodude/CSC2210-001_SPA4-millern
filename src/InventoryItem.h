@@ -7,7 +7,7 @@
 
 class InventoryItem {
   public:
-    virtual ~InventoryItem();
+    virtual ~InventoryItem() {}
     virtual int getAmount() = 0;
     virtual void add(int amount) = 0;
     virtual void sub(int amount) = 0;

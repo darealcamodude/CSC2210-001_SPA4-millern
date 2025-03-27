@@ -3,6 +3,8 @@
 //
 
 #include "Map.h"
+#include "Token.h"
+#include "InventoryItem.h"
 
 #include <iostream>
 using namespace std;
@@ -20,18 +22,18 @@ int main() {
   while (playing) {
     displayActions(); cin >> action;
     switch (tolower(action)) {
-      case 'w': case 'e': case 's': case 'n': const bool moved = map->move(action); if (moved) {
-        char currentCellEnd = map->checkCurrentCell(); if (currentCellEnd == 'W') {
-          badEnd1(); playing = false; break; } if (currentCellEnd == '#') {
-            badEnd2(); playing = false; break; } if (currentCellEnd == '^') {
-              cout << "You have gotten some more arrows. You now have " << map->getArrowSupply()
-              << " arrows." << endl; } if (currentCellEnd == 'B') {
-                cout << "You have been taken away by a bat." << endl; map->batMove(); } } break;
-      case 'a': if (!map->hasArrows()) { cout << "You have no arrows left." << endl; } else {
-        cout << "Choose which direction to shoot:" << endl; cin >> action;
-        if (map->shootArrow(action)) { goodEnd(); playing = false; } } break;
-      case 'h': displayHelp(); break; case 'q': playing = false; break;
-      case 'm': map->showMap(); break; default: cout << "Invalid action." << endl; break;
+      case 'w': case 'e': case 's': case 'n': { bool moved = map->move(action); if (moved) {
+          char currentCellEnd = map->checkCurrentCell(); if (currentCellEnd == 'W') {
+            badEnd1(); playing = false; break; } if (currentCellEnd == '#') {
+              badEnd2(); playing = false; break; } if (currentCellEnd == '^') {
+                cout << "You have gotten some more arrows. You now have " << map->getArrowSupply()
+                << " arrows." << endl; } if (currentCellEnd == 'B') {
+                  cout << "You have been taken away by a bat." << endl; map->batMove(); }} break; }
+      case 'a': { if (!map->hasArrows()) { cout << "You have no arrows left." << endl; } else {
+          cout << "Choose which direction to shoot:" << endl; cin >> action;
+          if (map->shootArrow(action)) { goodEnd(); playing = false; } } break; }
+      case 'h': { displayHelp(); break; } case 'q': { playing = false; break; }
+      case 'm': { map->showMap(); break; } default: { cout << "Invalid action." << endl; break; }
     } } delete map; return 0; }
 
 void intro() {

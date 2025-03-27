@@ -8,14 +8,14 @@
 #include "Token.h"
 #include "InventoryItem.h"
 
-class Arrow : public Token, public InventoryItem{
+class Arrow : public Token{
   public:
     Arrow(int startingQuantity);
     ~Arrow();
 
-    int getAmount() override;
-    void add(int amount) override;
-    void sub(int amount) override;
+    int getAmount();
+    void add(int amount);
+    void sub(int amount);
     char getToken() const override;
 
     private:

@@ -9,9 +9,11 @@
 
 class Token {
   public:
+    Token();
     virtual ~Token();
-    virtual char getToken() const { return '.'; };
-    virtual std::string getHint() const { return ""; };
+    virtual char getToken() const;
+    virtual std::string getHint() const;
 
 };
+
 #endif //TOKEN_H
