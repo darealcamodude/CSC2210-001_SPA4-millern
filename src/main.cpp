@@ -68,8 +68,5 @@ void goodEnd() {
 }
 
 void displayHints(Map* map) {
-  map->checkSide('n');
-  map->checkSide('e');
-  map->checkSide('s');
-  map->checkSide('w');
+  map->checkSide('n'); map->checkSide('e'); map->checkSide('s'); map->checkSide('w');
 }
