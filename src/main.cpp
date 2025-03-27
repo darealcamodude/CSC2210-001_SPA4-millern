@@ -29,11 +29,11 @@ int main() {
                 cout << "You have gotten some more arrows. You now have " << map->getArrowSupply()
                 << " arrows." << endl; } if (currentCellEnd == 'B') {
                   cout << "You have been taken away by a bat." << endl; map->batMove(); }} break; }
-      case 'a': { if (!map->hasArrows()) { cout << "You have no arrows left." << endl; } else {
+      case 'a':  if (!map->hasArrows()) { cout << "You have no arrows left." << endl; } else {
           cout << "Choose which direction to shoot:" << endl; cin >> action;
-          if (map->shootArrow(action)) { goodEnd(); playing = false; } } break; }
-      case 'h': { displayHelp(); break; } case 'q': { playing = false; break; }
-      case 'm': { map->showMap(); break; } default: { cout << "Invalid action." << endl; break; }
+          if (map->shootArrow(action)) { goodEnd(); playing = false; } } break;
+      case 'h':  displayHelp(); break;  case 'q':  playing = false; break;
+      case 'm':  map->showMap(); break;  default: cout << "Invalid action." << endl; break;
     } } delete map; return 0; }
 
 void intro() {

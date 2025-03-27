@@ -42,6 +42,8 @@ Map::Map(int startX, int startY) {
       if (i > 0) cells[i][j]->setWest(cells[i-1][j]);
     }
   }
+
+  arrowSupply = new Arrow(2);
 }
 
 Map::~Map() {
@@ -56,7 +58,7 @@ Map::~Map() {
 void Map::showMap() {
   for (int i = 0; i < 6; i++) {
     for (int j = 0; j < 6; j++) {
-      std::cout << " " << cells[i][j]->hasPlayer() ? 'P' : cells[i][j]->getToken();
+      (std::cout << " " << cells[i][j]->hasPlayer()) ? 'P' : cells[i][j]->getToken();
     } std::cout << std::endl;
   }
 }
