@@ -5,16 +5,20 @@
 #include "MapCell.h"
 #include "Arrow.h"
 #include "Player.h"
+#include "Wumpus.h"
 #include <typeinfo>
 
 using namespace std;
 
 MapCell::MapCell(Token* token) {
-  if (typeid(token) != typeid(Player)) {
-  this->token = token;
-  } else {
+  if (typeid(token) == typeid(Player)) {
     this->token = new Token();
     moveIntoCell();
+  } else if (typeid(token) == typeid(Wumpus)) {
+    this->token = new Token();
+    moveWumpusIn();
+  } else {
+    this->token = token;
   }
 }
 
@@ -26,6 +30,14 @@ MapCell::~MapCell() {
   delete token;
 }
 
+void MapCell::moveWumpusIn() {
+  wumpusInCell = true;
+}
+
+void MapCell::moveWumpusOut() {
+  wumpusInCell = false;
+}
+
 void MapCell::moveOutOfCell() {
   playerInCell = false;
 }
@@ -35,7 +47,7 @@ void MapCell::moveIntoCell() {
 }
 
 char MapCell::getToken() {
-  return token->getToken();
+  return hasWumpus() ? 'W' : hasPlayer() ? 'P' : token->getToken();
 }
 
 bool MapCell::hasArrow() const {
@@ -47,7 +59,7 @@ bool MapCell::hasBat() const {
 }
 
 bool MapCell::hasWumpus() const {
-  return token->getToken() == 'W';
+  return wumpusInCell;
 }
 
 bool MapCell::hasPit() const {

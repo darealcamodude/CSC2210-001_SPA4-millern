@@ -21,9 +21,12 @@ class Map {
     bool hasArrows();
     int getArrowSupply();
     void batMove();
+    void moveWumpus();
+    void checkSide(char direction);
 
     private:
       MapCell* currentCell;
+      MapCell* wumpusCell;
       MapCell *cells[6][6];
       Arrow *arrowSupply;
 };

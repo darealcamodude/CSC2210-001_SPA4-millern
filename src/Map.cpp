@@ -13,6 +13,7 @@
 #include "Pit.h"
 #include <ctime>
 #include <iostream>
+using namespace std;
 
 Map::Map(int startX, int startY) {
   MapCell* cell; srand(time(NULL)); bool wumpusGenerated = false;
@@ -27,7 +28,7 @@ Map::Map(int startX, int startY) {
           case 0: cell = new MapCell(new Token()); break;
           case 1: cell = new MapCell(new Arrow((rand() % 2) + 1)); break;
           case 2: cell = new MapCell(new Pit()); break;
-          case 3: cell = new MapCell(new Wumpus()); break;
+          case 3: cell = new MapCell(new Wumpus()); wumpusCell = cell; break;
         }
       }
       cells[i][j] = cell;
@@ -56,10 +57,11 @@ Map::~Map() {
 }
 
 void Map::showMap() {
+  cout << "Map Key:" << endl <<"| Arrrow: ^ | Pit: # | Player: P | Wumpus: W | Empty: . |" << endl;
   for (int i = 0; i < 6; i++) {
     for (int j = 0; j < 6; j++) {
-      (std::cout << " " << cells[i][j]->hasPlayer()) ? 'P' : cells[i][j]->getToken();
-    } std::cout << std::endl;
+      cout << " " << cells[i][j]->getToken();
+    } cout << endl;
   }
 }
 
@@ -74,7 +76,7 @@ bool Map::move(char direction) {
         moved = true; } break;
     case 'e': if (currentCell->hasEastCell()) { currentCell = currentCell->getEast();
         moved = true; } break;
-    default: std::cout << "Invalid direction." << std::endl; break;
+    default: cout << "Invalid direction." << endl; break;
   }
   currentCell->moveIntoCell(); return moved;
 }
@@ -120,6 +122,47 @@ void Map::batMove() {
         else index++; break;
       case 3: if (currentCell->hasSouthCell()) currentCell = currentCell->getSouth();
         else index++; break;
-    } if (currentCell->hasWumpus()) { index++; } index--;
+    } if (currentCell->hasWumpus() || currentCell->hasPit()) { index++; } index--;
   }
+}
+
+void Map::moveWumpus() {
+  int num = (rand() % 4); wumpusCell->moveWumpusOut();
+  switch (num) {
+    case 0: if (wumpusCell->hasNorthCell()) wumpusCell = wumpusCell->getNorth(); break;
+    case 1: if (wumpusCell->hasEastCell()) wumpusCell = wumpusCell->getEast(); break;
+    case 2: if (wumpusCell->hasSouthCell()) wumpusCell = wumpusCell->getSouth(); break;
+    case 3: if (wumpusCell->hasWestCell()) wumpusCell = wumpusCell->getWest(); break;
+  }
+  wumpusCell->moveWumpusIn();
+}
+
+void checkSideHelp(char direction, MapCell* currentCheckCell) {
+  MapCell* checkCell = NULL;
+  switch (tolower(direction)) {
+    case 'n': if (currentCheckCell->hasNorthCell()) checkCell = currentCheckCell->getNorth(); break;
+    case 'e': if (currentCheckCell->hasEastCell()) checkCell = currentCheckCell->getEast(); break;
+    case 's': if (currentCheckCell->hasSouthCell()) checkCell = currentCheckCell->getSouth(); break;
+    case 'w': if (currentCheckCell->hasWestCell()) checkCell = currentCheckCell->getWest(); break;
+  }
+  if (checkCell != NULL && checkCell->hasBat()) {
+    cout << "Bat nearby" << endl;
+  }
+}
+
+void Map::checkSide(char direction) {
+  MapCell* checkCell = NULL;
+  switch (tolower(direction)) {
+    case 'n': if (currentCell->hasNorthCell()) checkCell = currentCell->getNorth(); break;
+    case 'e': if (currentCell->hasEastCell()) checkCell = currentCell->getEast(); break;
+    case 's': if (currentCell->hasSouthCell()) checkCell = currentCell->getSouth(); break;
+    case 'w': if (currentCell->hasWestCell()) checkCell = currentCell->getWest(); break;
+  }
+  if (checkCell !=  NULL) {
+  checkSideHelp('n', checkCell); checkSideHelp('s', checkCell);
+  checkSideHelp('e', checkCell); checkSideHelp('w', checkCell);
+  if (checkCell->hasBat()) cout << "Bat nearby" << endl;
+  if (checkCell->hasPit()) cout << "Pit nearby" << endl;
+  if (checkCell->hasWumpus()) cout << "Wumpus nearby" << endl;
+  } return;
 }

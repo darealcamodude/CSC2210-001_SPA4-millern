@@ -22,6 +22,8 @@ class MapCell {
     bool hasPlayer() const;
     void moveIntoCell();
     void moveOutOfCell();
+    void moveWumpusIn();
+    void moveWumpusOut();
     bool hasNorthCell() const;
     MapCell* getNorth();
     void setNorth(MapCell* cell);
@@ -39,7 +41,7 @@ class MapCell {
 
   private:
     Token* token;
-    bool playerInCell;
+    bool playerInCell, wumpusInCell;
     MapCell* northCell;
     MapCell* southCell;
     MapCell* eastCell;

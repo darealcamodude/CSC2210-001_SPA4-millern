@@ -15,9 +15,10 @@ void displayActions();
 void badEnd1();
 void badEnd2();
 void goodEnd();
+void displayHints(Map* map);
 
 int main() {
-  intro(); bool playing = true; char action; srand(time(NULL));
+  intro(); bool playing = true; char action; srand(time(NULL)); int wumpusMove = 0;
   Map* map = new Map(rand() % 6, rand() % 6);
   while (playing) {
     displayActions(); cin >> action;
@@ -29,12 +30,14 @@ int main() {
                 cout << "You have gotten some more arrows. You now have " << map->getArrowSupply()
                 << " arrows." << endl; } if (currentCellEnd == 'B') {
                   cout << "You have been taken away by a bat." << endl; map->batMove(); }} break; }
-      case 'a':  if (!map->hasArrows()) { cout << "You have no arrows left." << endl; } else {
+      case 'a':  if (!map->hasArrows()) { wumpusMove += 2;
+        cout << "You have no arrows left." << endl; } else {
           cout << "Choose which direction to shoot:" << endl; cin >> action;
           if (map->shootArrow(action)) { goodEnd(); playing = false; } } break;
       case 'h':  displayHelp(); break;  case 'q':  playing = false; break;
       case 'm':  map->showMap(); break;  default: cout << "Invalid action." << endl; break;
-    } } delete map; return 0; }
+    } if (wumpusMove > 0) { map->moveWumpus(); displayHints(map); }
+  } delete map; return 0; }
 
 void intro() {
   cout << "You have been summoned to hunt down a monster. "
@@ -62,4 +65,11 @@ void badEnd2() {
 void goodEnd() {
   cout << "You have shot down the Wumpus and returned home safely. "
           "Everyone will be safe for now." << endl;
+}
+
+void displayHints(Map* map) {
+  map->checkSide('n');
+  map->checkSide('e');
+  map->checkSide('s');
+  map->checkSide('w');
 }
