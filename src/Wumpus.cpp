@@ -3,3 +3,19 @@
 //
 
 #include "Wumpus.h"
+
+Wumpus::Wumpus() {
+
+}
+
+Wumpus::~Wumpus() {
+
+}
+
+char Wumpus::getToken() const {
+  return 'W';
+}
+
+std::string Wumpus::getHint() const {
+  return "Wumpus";
+}

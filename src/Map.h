@@ -12,12 +12,13 @@ class Map {
 
   public:
     Map(int startX, int startY);
-    void setup();
-    void tearDown();
+    ~Map();
+    void showMap();
     bool move(char direction);
 
     private:
       MapCell* currentCell;
+      MapCell *cells[6][6];
 };
 
 

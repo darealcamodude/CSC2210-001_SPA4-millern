@@ -17,6 +17,9 @@ class Arrow : public Token, public InventoryItem{
     void add(int amount) override;
     void sub(int amount) override;
     char getToken() const override;
+
+    private:
+      int quantity;
 };
 
 
