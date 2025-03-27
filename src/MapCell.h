@@ -39,6 +39,7 @@ class MapCell {
 
   private:
     Token* token;
+    bool playerInCell;
     MapCell* northCell;
     MapCell* southCell;
     MapCell* eastCell;

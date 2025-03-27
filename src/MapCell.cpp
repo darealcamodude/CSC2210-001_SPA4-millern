@@ -4,12 +4,18 @@
 
 #include "MapCell.h"
 #include "Arrow.h"
+#include "Player.h"
 #include <typeinfo>
 
 using namespace std;
 
 MapCell::MapCell(Token* token) {
+  if (typeid(token) != typeid(Player)) {
   this->token = token;
+  } else {
+    this->token = new Token();
+    moveIntoCell();
+  }
 }
 
 MapCell::~MapCell() {
@@ -18,6 +24,14 @@ MapCell::~MapCell() {
   delete eastCell;
   delete westCell;
   delete token;
+}
+
+void MapCell::moveOutOfCell() {
+  playerInCell = false;
+}
+
+void MapCell::moveIntoCell() {
+  playerInCell = true;
 }
 
 char MapCell::getToken() {
@@ -41,7 +55,7 @@ bool MapCell::hasPit() const {
 }
 
 bool MapCell::hasPlayer() const {
-  return token->getToken() == 'P';
+  return playerInCell;
 }
 
 bool MapCell::hasNorthCell() const {
@@ -97,5 +111,7 @@ string MapCell::getHint() {
 }
 
 int MapCell::takeArrows() {
-  return typeid(token) == typeid(Arrow) ? dynamic_cast<Arrow*>(token)->getAmount() : 0;
+  int arrows = typeid(token) == typeid(Arrow) ? dynamic_cast<Arrow*>(token)->getAmount() : 0;
+  token = new Token();
+  return arrows;
 }

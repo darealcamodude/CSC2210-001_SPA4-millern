@@ -6,6 +6,7 @@
 #define MAP_H
 
 class MapCell;
+class Arrow;
 
 
 class Map {
@@ -15,10 +16,16 @@ class Map {
     ~Map();
     void showMap();
     bool move(char direction);
+    bool shootArrow(char direction);
+    char checkCurrentCell();
+    bool hasArrows();
+    int getArrowSupply();
+    void batMove();
 
     private:
       MapCell* currentCell;
       MapCell *cells[6][6];
+      Arrow *arrowSupply;
 };
 
 
