@@ -21,7 +21,10 @@ void displayHints(Map* map);
 
 int main() {
   intro(); bool playing = true; char action; srand(time(NULL)); int wumpusMove = 0;
-  Map* map = new Map(rand() % 6, rand() % 6);
+  int pX = rand() % 6; int pY = rand() % 6; int wX, wY;
+  do { wX = rand() % 6;  wY = rand() % 6;
+  } while (wX == pX && wY == pY);
+  Map* map = new Map(pX, pY, wX, wY);
   while (playing) {
     displayHints(map); displayActions(); cin >> action;
     switch (tolower(action)) {

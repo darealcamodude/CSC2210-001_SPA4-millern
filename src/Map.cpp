@@ -11,24 +11,28 @@
 #include "Token.h"
 #include "Arrow.h"
 #include "Pit.h"
+#include "Bat.h"
 #include <ctime>
 #include <iostream>
 using namespace std;
 
-Map::Map(int startX, int startY) {
-  MapCell* cell; srand(time(0)); bool wumpusGenerated = false; int num;
+Map::Map(int startX, int startY, int wumpusX, int wumpusY) {
+  MapCell* cell; srand(time(0)); int num;
   for (int i = 0; i < 6; i++) {
     for (int j = 0; j < 6; j++) {
       if (j == startX && i == startY) {
         cell = new MapCell(new Player());
         currentCell = cell;
+      } else if (j == wumpusX && i == wumpusY) {
+        cell = new MapCell(new Wumpus());
+        wumpusCell = cell;
       } else {
-          num = rand() % (wumpusGenerated ? 3 : 4);
+        num = rand() % 4;
         switch (num) {
           case 0: cell = new MapCell(new Token()); break;
           case 1: cell = new MapCell(new Arrow((rand() % 2) + 1)); break;
           case 2: cell = new MapCell(new Pit()); break;
-          case 3: cell = new MapCell(new Wumpus()); wumpusGenerated = true; wumpusCell = cell;
+          case 3: cell = new MapCell(new Bat()); break;
         }
       }
       //cout << cell->getToken(); cell->displayToken();
@@ -147,7 +151,7 @@ void checkSideHelp(char direction, MapCell* currentCheckCell) {
     case 'w': if (currentCheckCell->hasWestCell()) checkCell = currentCheckCell->getWest(); break;
   }
   if (checkCell != NULL && checkCell->hasBat()) {
-    cout << "Bat nearby" << endl;
+    cout << checkCell->getHint() << endl;
   }
 }
 
@@ -160,10 +164,8 @@ void Map::checkSide(char direction) {
     case 'w': if (currentCell->hasWestCell()) checkCell = currentCell->getWest(); break;
   }
   if (checkCell !=  NULL) {
-  checkSideHelp('n', checkCell); checkSideHelp('s', checkCell);
-  checkSideHelp('e', checkCell); checkSideHelp('w', checkCell);
-  if (checkCell->hasBat()) cout << "Bat nearby" << endl;
-  if (checkCell->hasPit()) cout << "Pit nearby" << endl;
-  if (checkCell->hasWumpus()) cout << "Wumpus nearby" << endl;
+    checkSideHelp('n', checkCell); checkSideHelp('s', checkCell);
+    checkSideHelp('e', checkCell); checkSideHelp('w', checkCell);
+    cout << checkCell->getHint() << endl;
   } return;
 }

@@ -12,7 +12,7 @@ class Arrow;
 class Map {
 
   public:
-    Map(int startX, int startY);
+    Map(int startX, int startY, int wumpusX, int wumpusY);
     ~Map();
     void showMap();
     bool move(char direction);
