@@ -23,7 +23,7 @@ int main() {
   intro(); bool playing = true; char action; srand(time(NULL)); int wumpusMove = 0;
   Map* map = new Map(rand() % 6, rand() % 6);
   while (playing) {
-    displayActions(); cin >> action;
+    displayHints(map); displayActions(); cin >> action;
     switch (tolower(action)) {
       case 'w': case 'e': case 's': case 'n': { bool moved = map->move(action); if (moved) {
           char currentCellEnd = map->checkCurrentCell(); if (currentCellEnd == 'W') {
@@ -38,7 +38,7 @@ int main() {
           if (map->shootArrow(action)) { goodEnd(); playing = false; } } break;
       case 'h':  displayHelp(); break;  case 'q':  playing = false; break;
       case 'm':  map->showMap(); break;  default: cout << "Invalid action." << endl; break;
-    } if (wumpusMove > 0) { map->moveWumpus(); } displayHints(map);
+    } if (wumpusMove > 0) { map->moveWumpus(); }
   } delete map; return 0; }
 
 void intro() {

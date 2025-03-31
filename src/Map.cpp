@@ -22,17 +22,16 @@ Map::Map(int startX, int startY) {
       if (j == startX && i == startY) {
         cell = new MapCell(new Player());
         currentCell = cell;
-        cout << "Player token" << endl;
       } else {
           num = rand() % (wumpusGenerated ? 3 : 4);
         switch (num) {
-          case 0: cell = new MapCell(new Token()); cout << "Normie token" << endl; break;
-          case 1: cell = new MapCell(new Arrow((rand() % 2) + 1)); cout << "Arrow token" << endl; break;
-          case 2: cell = new MapCell(new Pit()); cout << "Pit token" << endl; break;
-          case 3: cell = new MapCell(new Wumpus()); wumpusGenerated = true; wumpusCell = cell; cout << "Wumpus token" << endl; break;
+          case 0: cell = new MapCell(new Token()); break;
+          case 1: cell = new MapCell(new Arrow((rand() % 2) + 1)); break;
+          case 2: cell = new MapCell(new Pit()); break;
+          case 3: cell = new MapCell(new Wumpus()); wumpusGenerated = true; wumpusCell = cell;
         }
       }
-      cout << cell->getToken(); cell->displayToken();
+      //cout << cell->getToken(); cell->displayToken();
       cells[j][i] = cell;
     }
   }
