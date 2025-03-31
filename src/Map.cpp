@@ -164,8 +164,7 @@ void Map::checkSide(char direction) {
     case 'w': if (currentCell->hasWestCell()) checkCell = currentCell->getWest(); break;
   }
   if (checkCell !=  NULL) {
-    checkSideHelp('n', checkCell); checkSideHelp('s', checkCell);
-    checkSideHelp('e', checkCell); checkSideHelp('w', checkCell);
+    checkSideHelp(direction, checkCell);
     cout << checkCell->getHint() << endl;
   } return;
 }
