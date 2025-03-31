@@ -53,7 +53,7 @@ void displayHelp() {
   cout << "Pit: " << pit->getHint() << endl;
   cout << "Wumpus: " << wumpus->getHint() << endl;
   cout << "Bat: " << bat->getHint() << endl;
-  delete pit; delete wumpus; delete bat
+  delete pit; delete wumpus; delete bat;
 }
 
 void displayActions() {

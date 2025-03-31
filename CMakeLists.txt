@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(wumpus
         src/Token.cpp
+        src/Bat.cpp
         src/MapCell.cpp
         src/Map.cpp
         src/Player.cpp
