@@ -53,9 +53,9 @@ void intro() {
 void displayHelp() {
   Pit *pit = new Pit(); Wumpus *wumpus = new Wumpus(); Bat *bat = new Bat();
   cout << "Help:" << endl;
-  cout << "Pit: " << pit->getHint() << endl;
-  cout << "Wumpus: " << wumpus->getHint() << endl;
-  cout << "Bat: " << bat->getHint() << endl;
+  cout << "Pit 1 cell away: " << pit->getHint() << endl;
+  cout << "Wumpus 1 cell away: " << wumpus->getHint() << endl;
+  cout << "Bat 2 cells away: " << bat->getHint() << endl;
   delete pit; delete wumpus; delete bat;
 }
 
