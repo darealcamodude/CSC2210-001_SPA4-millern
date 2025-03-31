@@ -13,9 +13,9 @@ Pit::~Pit() {
 }
 
 char Pit::getToken() const {
-  return 'P';
+  return '#';
 }
 
 std::string Pit::getHint() const {
-  return "Pit";
+  return "You feel a draft.";
 }

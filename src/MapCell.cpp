@@ -6,19 +6,25 @@
 #include "Arrow.h"
 #include "Player.h"
 #include "Wumpus.h"
+#include "Pit.h"
+//#include "Bat.h"
 #include <typeinfo>
+#include <iostream>
 
 using namespace std;
 
 MapCell::MapCell(Token* token) {
   if (typeid(token) == typeid(Player)) {
     this->token = new Token();
-    moveIntoCell();
+    playerInCell = true;
+    //this->movingToken = token;
   } else if (typeid(token) == typeid(Wumpus)) {
     this->token = new Token();
-    moveWumpusIn();
+    wumpusInCell = true;
+    //this->movingToken = token;
   } else {
     this->token = token;
+    this->movingToken = NULL;
   }
 }
 
@@ -46,8 +52,11 @@ void MapCell::moveIntoCell() {
   playerInCell = true;
 }
 
+
+
 char MapCell::getToken() {
-  return hasWumpus() ? 'W' : hasPlayer() ? 'P' : token->getToken();
+  if (hasWumpus()) return 'W'; if(hasPlayer()) return 'P'; return token->getToken();
+  //if (movingToken == NULL) return token->getToken(); else return token->getToken();
 }
 
 bool MapCell::hasArrow() const {
@@ -126,4 +135,19 @@ int MapCell::takeArrows() {
   int arrows = typeid(token) == typeid(Arrow) ? dynamic_cast<Arrow*>(token)->getAmount() : 0;
   token = new Token();
   return arrows;
+}
+
+void MapCell::displayToken() {
+  cout << "| Token: " << token->getToken() << " = ";
+  if (typeid(token) == typeid(Arrow)) { cout << "Arrow";
+  } else if (typeid(token) == typeid(Wumpus)) { cout << "Wumpus";
+  } else if (typeid(token) == typeid(Player)) { cout << "Player";
+  } else if (typeid(token) == typeid(Pit)) { cout << "Pit";
+  //} else if (typeid(token) == typeid(Bat)) { cout << "Bat";
+  } else { cout << "token"; }
+/*
+  cout << endl << "Moving Token: ";
+  if (movingToken == NULL) cout << "NULL" ;
+  else cout << token->getToken();
+  cout << " = " << typeid(movingToken).name() << endl;*/
 }

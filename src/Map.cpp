@@ -16,31 +16,33 @@
 using namespace std;
 
 Map::Map(int startX, int startY) {
-  MapCell* cell; srand(time(NULL)); bool wumpusGenerated = false;
+  MapCell* cell; srand(time(0)); bool wumpusGenerated = false; int num;
   for (int i = 0; i < 6; i++) {
     for (int j = 0; j < 6; j++) {
-      if (i == startX && j == startY) {
+      if (j == startX && i == startY) {
         cell = new MapCell(new Player());
         currentCell = cell;
+        cout << "Player token" << endl;
       } else {
-        int num = rand() % (wumpusGenerated ? 3 : 4);
+          num = rand() % (wumpusGenerated ? 3 : 4);
         switch (num) {
-          case 0: cell = new MapCell(new Token()); break;
-          case 1: cell = new MapCell(new Arrow((rand() % 2) + 1)); break;
-          case 2: cell = new MapCell(new Pit()); break;
-          case 3: cell = new MapCell(new Wumpus()); wumpusCell = cell; break;
+          case 0: cell = new MapCell(new Token()); cout << "Normie token" << endl; break;
+          case 1: cell = new MapCell(new Arrow((rand() % 2) + 1)); cout << "Arrow token" << endl; break;
+          case 2: cell = new MapCell(new Pit()); cout << "Pit token" << endl; break;
+          case 3: cell = new MapCell(new Wumpus()); wumpusGenerated = true; wumpusCell = cell; cout << "Wumpus token" << endl; break;
         }
       }
-      cells[i][j] = cell;
+      cout << cell->getToken(); cell->displayToken();
+      cells[j][i] = cell;
     }
   }
 
   for (int i = 0; i < 6; i++) {
     for (int j = 0; j < 6; j++) {
-      if (j > 0) cells[i][j]->setNorth(cells[i][j-1]);
-      if (i < 5) cells[i][j]->setEast(cells[i+1][j]);
-      if (j < 5) cells[i][j]->setSouth(cells[i][j+1]);
-      if (i > 0) cells[i][j]->setWest(cells[i-1][j]);
+      if (i > 0) cells[j][i]->setNorth(cells[j][i-1]);
+      if (j < 5) cells[j][i]->setEast(cells[j+1][i]);
+      if (i < 5) cells[j][i]->setSouth(cells[j][i+1]);
+      if (j > 0) cells[j][i]->setWest(cells[j-1][i]);
     }
   }
 
@@ -69,13 +71,13 @@ bool Map::move(char direction) {
   bool moved = false; currentCell->moveOutOfCell();
   switch (tolower(direction)) {
     case 'w': if (currentCell->hasWestCell()) { currentCell = currentCell->getWest();
-        moved = true; } break;
+        moved = true; } else cout << "You hit a wall" << endl; break;
     case 's': if (currentCell->hasSouthCell()) { currentCell = currentCell->getSouth();
-        moved = true; } break;
+        moved = true; } else cout << "You hit a wall" << endl; break;
     case 'n': if (currentCell->hasNorthCell()) { currentCell = currentCell->getNorth();
-        moved = true; } break;
+        moved = true; } else cout << "You hit a wall" << endl; break;
     case 'e': if (currentCell->hasEastCell()) { currentCell = currentCell->getEast();
-        moved = true; } break;
+        moved = true; } else cout << "You hit a wall" << endl; break;
     default: cout << "Invalid direction." << endl; break;
   }
   currentCell->moveIntoCell(); return moved;

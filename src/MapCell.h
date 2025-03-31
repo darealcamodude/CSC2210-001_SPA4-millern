@@ -20,6 +20,9 @@ class MapCell {
     bool hasBat() const;
     bool hasPit() const;
     bool hasPlayer() const;
+
+    void displayToken();
+
     void moveIntoCell();
     void moveOutOfCell();
     void moveWumpusIn();
@@ -41,6 +44,7 @@ class MapCell {
 
   private:
     Token* token;
+    Token* movingToken;
     bool playerInCell, wumpusInCell;
     MapCell* northCell;
     MapCell* southCell;

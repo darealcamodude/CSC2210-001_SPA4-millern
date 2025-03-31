@@ -17,5 +17,5 @@ char Wumpus::getToken() const {
 }
 
 std::string Wumpus::getHint() const {
-  return "Wumpus";
+  return "You hear grumbling.";
 }

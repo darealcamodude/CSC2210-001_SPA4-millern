@@ -9,7 +9,6 @@
 
 class Token {
   public:
-    Token();
     virtual ~Token();
     virtual char getToken() const;
     virtual std::string getHint() const;

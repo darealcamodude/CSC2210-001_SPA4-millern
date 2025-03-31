@@ -4,7 +4,9 @@
 
 #include "Map.h"
 #include "Token.h"
-#include "InventoryItem.h"
+#include "Pit.h"
+#include "Wumpus.h"
+#include "Bat.h"
 
 #include <iostream>
 using namespace std;
@@ -36,7 +38,7 @@ int main() {
           if (map->shootArrow(action)) { goodEnd(); playing = false; } } break;
       case 'h':  displayHelp(); break;  case 'q':  playing = false; break;
       case 'm':  map->showMap(); break;  default: cout << "Invalid action." << endl; break;
-    } if (wumpusMove > 0) { map->moveWumpus(); displayHints(map); }
+    } if (wumpusMove > 0) { map->moveWumpus(); } displayHints(map);
   } delete map; return 0; }
 
 void intro() {
@@ -46,8 +48,12 @@ void intro() {
 }
 
 void displayHelp() {
+  Pit *pit = new Pit(); Wumpus *wumpus = new Wumpus(); Bat *bat = new Bat();
   cout << "Help:" << endl;
-
+  cout << "Pit: " << pit->getHint() << endl;
+  cout << "Wumpus: " << wumpus->getHint() << endl;
+  cout << "Bat: " << bat->getHint() << endl;
+  delete pit; delete wumpus; delete bat
 }
 
 void displayActions() {

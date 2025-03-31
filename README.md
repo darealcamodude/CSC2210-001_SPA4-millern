@@ -3,19 +3,19 @@
 
 ## Build Directions
 
-Version: 13.2.0
+Version: g++ version 13.2.0, cmake version 4.0.0-rc5, Visual Studio 2022
 
-Tool: <code>g++</code> and <code>./main.exe</code> command line functions.
+Tool: command line cmake
 
 Step-by-step guide:
-1. Make sure all .o files are up to date (they should be)
-2. Make sure main.exe is up to date (it should be)
-3. Run main.exe by inputting the command <code>./main.exe</code> to run the main.exe file
+1. Go into build directory (<code>cd build</code>)
+2. Go into the Release directory (<code>cd Release</code>)
+3. Run <code>./wumpus.exe</code>
    
 How to enter debug mode:
-- enterText 
+- In step 2, Run the command: <code>msbuild wumpus.sln /p:Configuration=Debug</code>, and in step 3 go into the Debug directory (<code>cd Debug</code>)
 - Typing <code>m</code> into the action prompt will show the map
 
 ## Change Log
 
-- change 1?
+- 
