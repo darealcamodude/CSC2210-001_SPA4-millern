@@ -22,9 +22,10 @@ bool moveCheck(Map* map);
 
 int main() {
   intro(); bool playing = true; char action; srand(time(NULL)); int wumpusMove = 0;
-  int pX = rand() % 6; int pY = rand() % 6; int wX, wY;
+  /*int pX = rand() % 6; int pY = rand() % 6; int wX, wY;
   do { wX = rand() % 6;  wY = rand() % 6;
-  } while (wX == pX && wY == pY);
+  } while (wX == pX && wY == pY);*/
+  int pX = 0; int pY = 0; int wX = 5; int wY = 5;
   Map* map = new Map(pX, pY, wX, wY);
   while (playing) {
     displayHints(map); displayActions(); cin >> action;

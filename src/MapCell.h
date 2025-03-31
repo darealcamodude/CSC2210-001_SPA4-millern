@@ -44,7 +44,6 @@ class MapCell {
 
   private:
     Token* token;
-    Token* movingToken;
     bool playerInCell, wumpusInCell;
     MapCell* northCell;
     MapCell* southCell;

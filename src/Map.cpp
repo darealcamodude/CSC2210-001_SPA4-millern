@@ -18,14 +18,17 @@ using namespace std;
 
 Map::Map(int startX, int startY, int wumpusX, int wumpusY) {
   MapCell* cell; srand(time(0)); int num;
+  cout << "(" << startX << ", " << startY << "), (" << wumpusX << ", " << wumpusY << ")" << endl;
   for (int i = 0; i < 6; i++) {
     for (int j = 0; j < 6; j++) {
       if (j == startX && i == startY) {
         cell = new MapCell(new Player());
         currentCell = cell;
+        cout << "(" << j << ", " << i << ")" << endl;
       } else if (j == wumpusX && i == wumpusY) {
         cell = new MapCell(new Wumpus());
         wumpusCell = cell;
+        cout << "(" << j << ", " << i << ")" << endl;
       } else {
         num = rand() % 4;
         switch (num) {
@@ -65,8 +68,19 @@ void Map::showMap() {
   cout << "Map Key:" << endl <<"| Arrrow: ^ | Pit: # | Player: P | Wumpus: W | Empty: . |" << endl;
   for (int i = 0; i < 6; i++) {
     for (int j = 0; j < 6; j++) {
-      cout << " " << cells[i][j]->getToken();
+      cout << " " << cells[j][i]->getToken();
     } cout << endl;
+  }
+  cout << endl;
+  for (int i = 0; i < 6; i++) {
+    for (int j = 0; j < 6; j++) {
+      if (cells[j][i]->getToken() == 'P') {
+        cout << "Player: (" << j << ", " << i << ")" << endl;
+      }
+      if (cells[j][i]->getToken() == 'W') {
+        cout << "Wumpus: (" << j << ", " << i << ")" << endl;
+      }
+    }
   }
 }
 
@@ -165,6 +179,6 @@ void Map::checkSide(char direction) {
   }
   if (checkCell !=  NULL) {
     checkSideHelp(direction, checkCell);
-    cout << checkCell->getHint() << endl;
+    if (checkCell->getHint() != "") cout << checkCell->getHint() << endl;
   } return;
 }
