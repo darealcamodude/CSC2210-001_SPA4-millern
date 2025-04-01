@@ -6,7 +6,7 @@
 #define ARROW_H
 
 #include "Token.h"
-#include "InventoryItem.h"
+//#include "InventoryItem.h"
 
 class Arrow : public Token{
   public:

@@ -18,17 +18,17 @@ using namespace std;
 
 Map::Map(int startX, int startY, int wumpusX, int wumpusY) {
   MapCell* cell; srand(time(0)); int num;
-  cout << "(" << startX << ", " << startY << "), (" << wumpusX << ", " << wumpusY << ")" << endl;
+  //cout << "(" << startX << ", " << startY << "), (" << wumpusX << ", " << wumpusY << ")" << endl;
   for (int i = 0; i < 6; i++) {
     for (int j = 0; j < 6; j++) {
       if (j == startX && i == startY) {
         cell = new MapCell(new Player());
         currentCell = cell;
-        cout << "(" << j << ", " << i << ")" << endl;
+        //cout << "(" << j << ", " << i << ")" << endl;
       } else if (j == wumpusX && i == wumpusY) {
         cell = new MapCell(new Wumpus());
         wumpusCell = cell;
-        cout << "(" << j << ", " << i << ")" << endl;
+        //cout << "(" << j << ", " << i << ")" << endl;
       } else {
         num = rand() % 4;
         switch (num) {
@@ -68,10 +68,11 @@ void Map::showMap() {
   cout << "Map Key:" << endl <<"| Arrrow: ^ | Pit: # | Player: P | Wumpus: W | Empty: . |" << endl;
   for (int i = 0; i < 6; i++) {
     for (int j = 0; j < 6; j++) {
-      cout << " " << cells[j][i]->getToken();
+      if (cells[j][i]->hasPlayer()) cout << " P";
+      else cout << " " << cells[j][i]->getToken();
     } cout << endl;
   }
-  cout << endl;
+  /*cout << endl;
   for (int i = 0; i < 6; i++) {
     for (int j = 0; j < 6; j++) {
       if (cells[j][i]->getToken() == 'P') {
@@ -81,7 +82,7 @@ void Map::showMap() {
         cout << "Wumpus: (" << j << ", " << i << ")" << endl;
       }
     }
-  }
+  }*/
 }
 
 bool Map::move(char direction) {
@@ -118,7 +119,7 @@ bool Map::shootArrow(char direction) {
 char Map::checkCurrentCell() {
   char token; if (currentCell->getToken() == '^') {
     arrowSupply->add(currentCell->takeArrows()); token = '^'; }
-  else token = currentCell->getToken(); return token;
+  else { token = currentCell->getToken(); } return token;
 }
 
 bool Map::hasArrows() {
@@ -130,7 +131,7 @@ int Map::getArrowSupply() {
 }
 
 void Map::batMove() {
-  int num; int index = (rand() % 6) + 2;
+  int num; int index = (rand() % 6) + 2; currentCell->moveOutOfCell();
   while (index > 0) {
     num = rand() % 4; switch (num) {
       case 0: if (currentCell->hasWestCell()) currentCell = currentCell->getWest();
@@ -142,7 +143,7 @@ void Map::batMove() {
       case 3: if (currentCell->hasSouthCell()) currentCell = currentCell->getSouth();
         else index++; break;
     } if (currentCell->hasWumpus() || currentCell->hasPit()) { index++; } index--;
-  }
+  } currentCell->moveIntoCell(); return;
 }
 
 void Map::moveWumpus() {

@@ -3,6 +3,8 @@ project(wumpus)
 
 set(CMAKE_CXX_STANDARD 20)
 
+include_directories(src)
+
 add_executable(wumpus
         src/Token.cpp
         src/Bat.cpp

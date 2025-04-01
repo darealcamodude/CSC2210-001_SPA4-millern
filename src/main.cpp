@@ -22,24 +22,22 @@ bool moveCheck(Map* map);
 
 int main() {
   intro(); bool playing = true; char action; srand(time(NULL)); int wumpusMove = 0;
-  /*int pX = rand() % 6; int pY = rand() % 6; int wX, wY;
+  int pX = rand() % 6; int pY = rand() % 6; int wX, wY;
   do { wX = rand() % 6;  wY = rand() % 6;
-  } while (wX == pX && wY == pY);*/
-  int pX = 0; int pY = 0; int wX = 5; int wY = 5;
+  } while (wX == pX && wY == pY);
   Map* map = new Map(pX, pY, wX, wY);
   while (playing) {
-    displayHints(map); displayActions(); cin >> action;
+    if (wumpusMove > 0) { map->moveWumpus(); } displayHints(map); displayActions(); cin >> action;
     switch (tolower(action)) {
       case 'w': case 'e': case 's': case 'n': {
         bool moved = map->move(action); if (moved) {
           playing = moveCheck(map); } break;}
-        case 'a':  if (!map->hasArrows()) { wumpusMove += 2;
-          cout << "You have no arrows left." << endl; } else {
-            cout << "Choose which direction to shoot:" << endl; cin >> action;
+        case 'a':  if (!map->hasArrows()) { cout << "You have no arrows left." << endl; } else {
+            cout << "Choose which direction to shoot:" << endl; cin >> action; wumpusMove += 2;
             if (map->shootArrow(action)) { goodEnd(); playing = false; } } break;
         case 'h':  displayHelp(); break;  case 'q':  playing = false; break;
         case 'm':  map->showMap(); break;  default: cout << "Invalid action." << endl; break;
-      } if (wumpusMove > 0) { map->moveWumpus(); }
+      }
     } delete map; return 0; }
 
 void intro() {

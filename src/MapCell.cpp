@@ -14,14 +14,16 @@
 using namespace std;
 
 MapCell::MapCell(Token* token) {
-  if (typeid(token) == typeid(Player)) {
+  if (token->getToken() == 'P') {
     this->token = new Token();
     playerInCell = true;
-  } else if (typeid(token) == typeid(Wumpus)) {
+  } else if (token->getToken() == 'W') {
     this->token = new Token();
     wumpusInCell = true;
   } else {
     this->token = token;
+    wumpusInCell = false;
+    playerInCell = false;
   }
 }
 
@@ -52,7 +54,7 @@ void MapCell::moveIntoCell() {
 
 
 char MapCell::getToken() {
-  if (hasWumpus()) return 'W'; if(hasPlayer()) return 'P'; return token->getToken();
+  if (hasWumpus()) return 'W'; return token->getToken();
   //if (movingToken == NULL) return token->getToken(); else return token->getToken();
 }
 
@@ -134,7 +136,7 @@ string MapCell::getHint() {
 }
 
 int MapCell::takeArrows() {
-  int arrows = typeid(token) == typeid(Arrow) ? dynamic_cast<Arrow*>(token)->getAmount() : 0;
+  int arrows = token->getToken() == '^' ? dynamic_cast<Arrow*>(token)->getAmount() : 0;
   token = new Token();
   return arrows;
 }
